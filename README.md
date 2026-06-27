@@ -51,8 +51,8 @@ The Rust side is intentionally thin: it owns the tray icon, window lifecycle, gl
 **Prerequisites:** Node.js ≥ 20, Rust (stable), Xcode Command Line Tools.
 
 ```bash
-git clone https://github.com/<you>/workbanch.git
-cd workbanch
+git clone https://github.com/<you>/workbench.git
+cd workbench
 npm install
 npm run tauri dev
 ```
