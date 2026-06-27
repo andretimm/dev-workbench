@@ -1,0 +1,11 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1024" height="1024" viewBox="0 0 1024 1024">
+  <rect width="1024" height="1024" rx="220" ry="220" fill="#6366f1"/>
+  <text
+    x="512" y="575"
+    font-family="'SF Mono', 'Courier New', monospace"
+    font-size="460"
+    font-weight="700"
+    text-anchor="middle"
+    fill="white"
+  >{}</text>
+</svg>

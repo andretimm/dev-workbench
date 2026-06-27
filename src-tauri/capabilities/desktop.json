@@ -1,0 +1,18 @@
+{
+  "identifier": "desktop-capability",
+  "platforms": [
+    "macOS"
+  ],
+  "windows": [
+    "main"
+  ],
+  "permissions": [
+    "positioner:default",
+    "global-shortcut:allow-register",
+    "global-shortcut:allow-unregister",
+    "global-shortcut:allow-is-registered",
+    "autostart:default",
+    "store:default",
+    "core:window:allow-hide"
+  ]
+}

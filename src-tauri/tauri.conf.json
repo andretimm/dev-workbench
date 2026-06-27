@@ -1,0 +1,51 @@
+{
+  "$schema": "https://schema.tauri.app/config/2",
+  "productName": "Dev Workbench",
+  "version": "0.1.0",
+  "identifier": "com.andretimm.devworkbench",
+  "build": {
+    "beforeDevCommand": "npm run dev",
+    "devUrl": "http://localhost:1420",
+    "beforeBuildCommand": "npm run build",
+    "frontendDist": "../dist"
+  },
+  "app": {
+    "macOSPrivateApi": true,
+    "windows": [
+      {
+        "label": "main",
+        "visible": false,
+        "title": "Dev Workbench",
+        "width": 900,
+        "height": 600,
+        "resizable": true,
+        "alwaysOnTop": true,
+        "decorations": false,
+        "transparent": true,
+        "skipTaskbar": true
+      }
+    ],
+    "security": {
+      "csp": null
+    }
+  },
+  "plugins": {
+    "updater": {
+      "pubkey": "dW50cnVzdGVkIGNvbW1lbnQ6IG1pbmlzaWduIHB1YmxpYyBrZXk6IDlGN0JCQjk0OTBEQkVGNUEKUldSYTc5dVFsTHQ3bitPWWszMEhiSjdVZDlnQmliZnRBR3FrMEQ0K05wMk9ZeTJ0WnByRkY2MzEK",
+      "endpoints": [
+        "https://raw.githubusercontent.com/andretimm/dev-workbench/main/updates/latest.json"
+      ]
+    }
+  },
+  "bundle": {
+    "active": true,
+    "targets": "all",
+    "icon": [
+      "icons/32x32.png",
+      "icons/128x128.png",
+      "icons/128x128@2x.png",
+      "icons/icon.icns",
+      "icons/icon.ico"
+    ]
+  }
+}

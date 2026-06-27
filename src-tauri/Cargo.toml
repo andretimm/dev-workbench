@@ -1,0 +1,63 @@
+[package]
+name = "dev-workbench"
+version = "0.1.0"
+description = "Dev Workbench — macOS menu bar dev toolbox"
+authors = ["andretimm"]
+edition = "2021"
+
+# See more keys and their definitions at https://doc.rust-lang.org/cargo/reference/manifest.html
+
+[lib]
+# The `_lib` suffix may seem redundant but it is necessary
+# to make the lib name unique and wouldn't conflict with the bin name.
+# This seems to be only an issue on Windows, see https://github.com/rust-lang/cargo/issues/8519
+name = "tauri_app_lib"
+crate-type = ["staticlib", "cdylib", "rlib"]
+
+[profile.release]
+# Universal release `.app` must stay under the PRD's 15 MB success metric
+# (Task 17, Step 6). `strip` drops debug symbols. Fat LTO (`lto = true`) is
+# deliberately NOT used: it conflicts with objc2's generated Objective-C
+# class symbols (window-vibrancy and our own objc2-app-kit usage both emit
+# `__CLASS_NSVisualEffectViewTagged`), causing "symbol multiply defined" /
+# bitcode-merge failures on the universal-apple-darwin cross-compiled
+# target. Thin LTO avoids that whole-crate-graph bitcode merge.
+strip = true
+lto = "thin"
+codegen-units = 1
+
+[build-dependencies]
+tauri-build = { version = "2", features = [] }
+
+[dependencies]
+tauri = { version = "2", features = ["macos-private-api", "tray-icon", "image-png"] }
+tauri-plugin-opener = "2"
+tauri-plugin-updater = "2"
+serde = { version = "1", features = ["derive"] }
+serde_json = "1"
+md-5 = "0.10"
+tauri-plugin-store = "2"
+
+[target.'cfg(not(any(target_os = "android", target_os = "ios")))'.dependencies]
+tauri-plugin-autostart = "2"
+tauri-plugin-global-shortcut = "2"
+# `tray-icon` feature is required for `Position::TrayCenter` and
+# `on_tray_event`, which we use to anchor the popover under the tray icon.
+tauri-plugin-positioner = { version = "2", features = ["tray-icon"] }
+
+[target.'cfg(target_os = "macos")'.dependencies]
+# Accessory-policy (no Dock icon) apps don't reliably become the
+# foreground/active app when `WebviewWindow::set_focus()` is called — macOS
+# may bring the window frontmost without making the *application* key, so
+# the webview never actually receives keyboard events (Esc, Cmd+W). We call
+# `NSApplication::activate()` directly to force real app activation. See
+# `show_and_focus_window` in `src/lib.rs`.
+objc2 = "0.6"
+objc2-app-kit = { version = "0.3", features = ["NSApplication", "NSResponder"] }
+objc2-foundation = "0.3"
+# `transparent: true` in tauri.conf.json only gives plain transparency (see
+# straight through to the desktop), not the frosted "popover" look the PRD's
+# Design Considerations call for. `apply_vibrancy` (Task 17) layers an actual
+# NSVisualEffectView blur material behind the webview.
+window-vibrancy = "0.7.1"
+
