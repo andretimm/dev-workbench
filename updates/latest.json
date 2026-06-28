@@ -1,11 +1,15 @@
 {
-  "version": "0.1.0",
-  "notes": "Initial release",
-  "pub_date": "2026-06-26T00:00:00.000Z",
+  "version": "0.1.5",
+  "notes": "",
+  "pub_date": "2026-06-28T15:23:58.000Z",
   "platforms": {
-    "darwin-universal": {
-      "signature": "",
-      "url": ""
+    "darwin-x86_64": {
+      "signature": "dW50cnVzdGVkIGNvbW1lbnQ6IHNpZ25hdHVyZSBmcm9tIHRhdXJpIHNlY3JldCBrZXkKUlVSYTc5dVFsTHQ3bnlIaEN4LzAvWVU5RVJRSmJVb3FsaXZpK000L2ZJYlp0YVJlY1pvdktuOUNkS2V3Nnk1alhud3owVlUwc0FSb2UzMWhMbXlHZlJlZk0xZW1qd3A2SEFVPQp0cnVzdGVkIGNvbW1lbnQ6IHRpbWVzdGFtcDoxNzgyNjYwMjM3CWZpbGU6RGV2IFdvcmtiZW5jaC5hcHAudGFyLmd6CmtBSkdiZ2pyTGJNRUhnd0VWQ3orMGtxckxReGxUU0phZXdlcVlpK2NLMitWa3c1UUVLWTA4bWt2bnFXblJmQVFKUFQ3Q0FNd25BRFQyV3U1VHU4NkRRPT0K",
+      "url": "https://github.com/andretimm/dev-workbench/releases/download/v0.1.5/Dev%20Workbench.app.tar.gz"
+    },
+    "darwin-aarch64": {
+      "signature": "dW50cnVzdGVkIGNvbW1lbnQ6IHNpZ25hdHVyZSBmcm9tIHRhdXJpIHNlY3JldCBrZXkKUlVSYTc5dVFsTHQ3bnlIaEN4LzAvWVU5RVJRSmJVb3FsaXZpK000L2ZJYlp0YVJlY1pvdktuOUNkS2V3Nnk1alhud3owVlUwc0FSb2UzMWhMbXlHZlJlZk0xZW1qd3A2SEFVPQp0cnVzdGVkIGNvbW1lbnQ6IHRpbWVzdGFtcDoxNzgyNjYwMjM3CWZpbGU6RGV2IFdvcmtiZW5jaC5hcHAudGFyLmd6CmtBSkdiZ2pyTGJNRUhnd0VWQ3orMGtxckxReGxUU0phZXdlcVlpK2NLMitWa3c1UUVLWTA4bWt2bnFXblJmQVFKUFQ3Q0FNd25BRFQyV3U1VHU4NkRRPT0K",
+      "url": "https://github.com/andretimm/dev-workbench/releases/download/v0.1.5/Dev%20Workbench.app.tar.gz"
     }
   }
 }
