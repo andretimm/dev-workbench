@@ -10,10 +10,34 @@ A native **macOS menu-bar app** that keeps the small text and data tools a devel
 
 Go to [**Releases**](../../releases/latest) and download the `.dmg` for your Mac (universal build — runs natively on Apple Silicon and Intel).
 
-Open the `.dmg`, drag **Dev Workbench** to Applications, and launch it. The app lives in the menu bar; click the `{}` icon to open it.
+Open the `.dmg`, drag **Dev Workbench** to Applications.
 
-> **First-launch note:** the app is not code-signed/notarized yet.  
-> Right-click the app → **Open** → confirm. You only need to do this once.
+---
+
+### ⚠️ Gatekeeper warning — app is not signed
+
+Dev Workbench is not code-signed or notarized with an Apple Developer certificate. macOS Gatekeeper will block the first launch with the message *"Dev Workbench.app was not opened"*. This is expected — the app is safe. Pick one of the methods below to allow it:
+
+**Option A — System Settings (recommended)**
+
+1. Click **OK** on the Gatekeeper dialog
+2. Open **System Settings → Privacy & Security**
+3. Scroll down to find *"Dev Workbench.app was blocked from use"*
+4. Click **Open Anyway** and confirm
+
+**Option B — Right-click in Finder**
+
+Right-click (or Control-click) the app in Finder → **Open** → click **Open** in the dialog that appears.
+
+**Option C — Terminal**
+
+```bash
+xattr -d com.apple.quarantine /Applications/Dev\ Workbench.app
+```
+
+You only need to do this once. After the first approval, macOS remembers the exception.
+
+---
 
 ---
 

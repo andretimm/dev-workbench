@@ -225,7 +225,9 @@ pub fn run() {
                 .build()?;
 
             let tray = TrayIconBuilder::new()
-                .icon(tauri::image::Image::from_path("icons/tray-icon.png")?)
+                .icon(tauri::image::Image::from_bytes(
+                    include_bytes!("../icons/tray-icon.png"),
+                )?)
                 .icon_as_template(true)
                 .menu(&menu)
                 .show_menu_on_left_click(false)
