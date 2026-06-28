@@ -115,16 +115,11 @@ jobs:
           # Upload .app.tar.gz to the release (tauri-action only uploads .dmg)
           gh release upload "$TAG" "$APP_TGZ" --repo "$GITHUB_REPOSITORY" --clobber
 
-          # Get the download URL now that the asset is uploaded
-          ASSET_URL=$(gh release view "$TAG" --repo "$GITHUB_REPOSITORY" \
-            --json assets \
-            --jq '.assets[] | select(.name | endswith(".app.tar.gz")) | .browserDownloadUrl' \
-            | head -1)
-
-          if [ -z "$ASSET_URL" ]; then
-            echo "Failed to get asset URL after upload"
-            exit 1
-          fi
+          # Construct download URL directly — format is always predictable
+          APP_TGZ_NAME=$(basename "$APP_TGZ")
+          ENCODED_NAME=$(python3 -c "import sys, urllib.parse; print(urllib.parse.quote(sys.argv[1]))" "$APP_TGZ_NAME")
+          ASSET_URL="https://github.com/$GITHUB_REPOSITORY/releases/download/$TAG/$ENCODED_NAME"
+          echo "Asset URL: $ASSET_URL"
 
           PUB_DATE=$(date -u +%Y-%m-%dT%H:%M:%S.000Z)
 
