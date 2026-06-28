@@ -116,20 +116,10 @@ jobs:
           # Upload .app.tar.gz to the release (tauri-action only uploads .dmg)
           gh release upload "$TAG" "$APP_TGZ" --repo "$GITHUB_REPOSITORY" --clobber
 
-          # Wait for GitHub to process the upload then get the real URL
-          sleep 10
-          echo "Assets in release:"
-          gh release view "$TAG" --repo "$GITHUB_REPOSITORY" --json assets --jq '.assets[] | .name'
-
-          ASSET_URL=$(gh release view "$TAG" --repo "$GITHUB_REPOSITORY" \
-            --json assets \
-            --jq '.assets[] | select(.name | test("\\.app\\.tar\\.gz$")) | .browserDownloadUrl' \
-            | head -1)
-
-          if [ -z "$ASSET_URL" ]; then
-            echo "Could not get asset URL after upload"
-            exit 1
-          fi
+          # GitHub replaces spaces with dots in asset names — apply the same transform
+          APP_TGZ_NAME=$(basename "$APP_TGZ")
+          GITHUB_ASSET_NAME=$(echo "$APP_TGZ_NAME" | tr ' ' '.')
+          ASSET_URL="https://github.com/$GITHUB_REPOSITORY/releases/download/$TAG/$GITHUB_ASSET_NAME"
           echo "Asset URL: $ASSET_URL"
 
           PUB_DATE=$(date -u +%Y-%m-%dT%H:%M:%S.000Z)
