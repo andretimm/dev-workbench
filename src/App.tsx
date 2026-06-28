@@ -18,14 +18,17 @@ function UpdateBanner({
   installing,
   onInstall,
   onDismiss,
+  error,
 }: {
   version: string;
   installing: boolean;
   onInstall: () => void;
   onDismiss: () => void;
+  error: string | null;
 }) {
   return (
-    <div className="flex items-center gap-2 border-b border-border bg-primary/10 px-3 py-1.5 text-xs">
+    <div className="flex flex-col border-b border-border bg-primary/10 px-3 py-1.5 text-xs">
+      <div className="flex items-center gap-2">
       <Download className="h-3.5 w-3.5 shrink-0 text-primary" />
       <span className="flex-1 text-foreground/80">
         v{version} available
@@ -52,6 +55,10 @@ function UpdateBanner({
       >
         <X className="h-3 w-3" />
       </button>
+      </div>
+      {error && (
+        <p className="mt-1 pl-5 text-[10px] text-red-400 break-all">{error}</p>
+      )}
     </div>
   );
 }
@@ -63,6 +70,7 @@ function App() {
   const [paletteOpen, setPaletteOpen] = useState(false);
   const [pendingUpdate, setPendingUpdate] = useState<string | null>(null);
   const [installing, setInstalling] = useState(false);
+  const [installError, setInstallError] = useState<string | null>(null);
 
   useEffect(() => {
     if (activeToolId !== "home" && activeToolId !== "settings") {
@@ -128,10 +136,12 @@ function App() {
 
   const handleInstallUpdate = useCallback(async () => {
     setInstalling(true);
+    setInstallError(null);
     try {
       await invoke("install_update");
-    } catch {
+    } catch (e) {
       setInstalling(false);
+      setInstallError(String(e));
     }
   }, []);
 
@@ -189,6 +199,7 @@ function App() {
             installing={installing}
             onInstall={handleInstallUpdate}
             onDismiss={handleDismissUpdate}
+            error={installError}
           />
         )}
         {installing && (
