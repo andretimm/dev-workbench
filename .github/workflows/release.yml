@@ -117,10 +117,13 @@ jobs:
           gh release upload "$TAG" "$APP_TGZ" --repo "$GITHUB_REPOSITORY" --clobber
 
           # Wait for GitHub to process the upload then get the real URL
-          sleep 5
+          sleep 10
+          echo "Assets in release:"
+          gh release view "$TAG" --repo "$GITHUB_REPOSITORY" --json assets --jq '.assets[] | .name'
+
           ASSET_URL=$(gh release view "$TAG" --repo "$GITHUB_REPOSITORY" \
             --json assets \
-            --jq '.assets[] | select(.name | endswith(".app.tar.gz")) | .browserDownloadUrl' \
+            --jq '.assets[] | select(.name | test("\\.app\\.tar\\.gz$")) | .browserDownloadUrl' \
             | head -1)
 
           if [ -z "$ASSET_URL" ]; then
