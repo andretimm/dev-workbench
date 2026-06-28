@@ -128,7 +128,7 @@ jobs:
             --arg pub_date "$PUB_DATE" \
             --arg signature "$SIGNATURE" \
             --arg url "$ASSET_URL" \
-            '{version: $version, notes: "", pub_date: $pub_date, platforms: {"darwin-universal": {signature: $signature, url: $url}}}' \
+            '{version: $version, notes: "", pub_date: $pub_date, platforms: {"darwin-x86_64": {signature: $signature, url: $url}, "darwin-aarch64": {signature: $signature, url: $url}}}' \
             > updates/latest.json
 
           git config user.name "github-actions[bot]"
