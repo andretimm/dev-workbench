@@ -108,20 +108,22 @@ jobs:
           fi
           echo "Found bundle: $APP_TGZ"
 
-          # Sign the bundle ourselves so we always get a fresh .sig
-          # regardless of whether tauri-action generated one
+          # Sign the bundle
           npx tauri signer sign -k "$TAURI_SIGNING_PRIVATE_KEY" "$APP_TGZ"
           SIGNATURE=$(cat "${APP_TGZ}.sig")
 
-          # Get the download URL from the GitHub release
+          # Upload .app.tar.gz to the release (tauri-action only uploads .dmg)
+          gh release upload "$TAG" "$APP_TGZ" --repo "$GITHUB_REPOSITORY" --clobber
+
+          # Get the download URL now that the asset is uploaded
           ASSET_URL=$(gh release view "$TAG" --repo "$GITHUB_REPOSITORY" \
             --json assets \
             --jq '.assets[] | select(.name | endswith(".app.tar.gz")) | .browserDownloadUrl' \
             | head -1)
 
           if [ -z "$ASSET_URL" ]; then
-            echo "No .app.tar.gz asset found in release — skipping latest.json update"
-            exit 0
+            echo "Failed to get asset URL after upload"
+            exit 1
           fi
 
           PUB_DATE=$(date -u +%Y-%m-%dT%H:%M:%S.000Z)
